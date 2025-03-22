@@ -374,7 +374,81 @@ function Scene() {
   
   export default Scene;
   `,
-    Next: "Next",
+    Next: `
+  import React, { useRef, useState, useEffect } from "react";
+  import { Canvas, useThree } from "@react-three/fiber";
+  import { useGLTF, OrbitControls } from "@react-three/drei";
+  
+  function Model() {
+  const modelRef = useRef();
+  
+  useEffect(() => {
+  if (modelRef.current) {
+    modelRef.current.scale.set(${settings.modelScale}, ${
+      settings.modelScale
+    }, ${settings.modelScale});
+    modelRef.current.rotation.set(${settings.rotationX}, ${
+      settings.rotationY
+    }, ${settings.rotationZ});
+    modelRef.current.position.set(${settings.positionX}, ${
+      settings.positionY
+    }, ${settings.positionZ});
+    modelRef.current.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material.color.set('${settings.modelColor}');
+        child.material.emissive.set('${settings.emissiveColor}');
+        child.material.emissiveIntensity = ${settings.emissiveIntensity};
+        child.material.castShadow = true;
+      }
+      });
+    
+  }
+  }, []);
+  
+  return (<mesh ref={modelRef}>
+          ${GetModelUser(shape)}
+          <meshStandardMaterial color={"${settings.modelColor}"}  />
+        </mesh>);
+  }
+  
+  function CameraController({ fov }) {
+  const { camera } = useThree();
+  
+  useEffect(() => {
+  camera.fov = fov;
+  camera.updateProjectionMatrix();
+  }, [fov]);
+  
+  return null;
+  }
+  
+  const Scene=()=> {
+  return (
+  <div  style={{position:"absolute",height:"100vh",width:"100vw",inset:"0"}}>
+    <Canvas camera={{ fov: ${settings.cameraFOV}, position: [0, 0, 10] }}>
+      <CameraController fov={${settings.cameraFOV}} />
+      <directionalLight
+        position={[10, 10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <directionalLight
+        position={[-10, -10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <ambientLight intensity={2} />
+      <pointLight position={[10, 10, 10]} />
+      <Model  />
+      <OrbitControls />
+    </Canvas>
+  </div>
+  );
+  }
+  
+  export default Scene;`,
     Vanilla: `
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";

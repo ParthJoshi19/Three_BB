@@ -38,7 +38,7 @@ const GetShapes = ({ shape }) => {
       <div className="flex w-full justify-between items-center mt-4">
         <p className="text-white text-sm mt-2">{shape.toUpperCase()}</p>
         <button
-          onClick={() => navigate("/customize", { state: { shape } })}
+          onClick={() => navigate("/customizemodel", { state: { shape } })}
           className="px-2 py-2 bg-blue-500 text-white font-semibold text-lg rounded-lg shadow-md hover:bg-blue-600 transition"
         >
           Customize

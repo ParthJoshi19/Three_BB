@@ -7,167 +7,16 @@ import { useLocation } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrowNight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import * as THREE from "three";
-const GetModel = (shape) => {
-  let geometry;
-  switch (shape.shape.toLowerCase()) {
-    case "box":
-      geometry = <boxGeometry args={[2, 2, 2]} />;
-      break;
-    case "sphere":
-      geometry = <sphereGeometry args={[1.5, 32, 32]} />;
-      break;
-    case "plane":
-      geometry = <planeGeometry args={[4, 4]} />;
-      break;
-    case "circle":
-      geometry = <circleGeometry args={[2, 32]} />;
-      break;
-    case "cone":
-      geometry = <coneGeometry args={[1.5, 3, 32]} />;
-      break;
-    case "cylinder":
-      geometry = <cylinderGeometry args={[1, 1, 3, 32]} />;
-      break;
-    case "torus":
-      geometry = <torusGeometry args={[1, 0.4, 16, 100]} />;
-      break;
-    case "torus-knot":
-      geometry = <torusKnotGeometry args={[1, 0.3, 100, 16]} />;
-      break;
-    case "dodecahedron":
-      geometry = <dodecahedronGeometry />;
-      break;
-    case "icosahedron":
-      geometry = <icosahedronGeometry />;
-      break;
-    case "octahedron":
-      geometry = <octahedronGeometry />;
-      break;
-    case "tetrahedron":
-      geometry = <tetrahedronGeometry />;
-      break;
-    case "ring":
-      geometry = <ringGeometry args={[1, 2, 32]} />;
-      break;
-    case "capsule":
-      geometry = <capsuleGeometry args={[1, 2, 8, 16]} />;
-      break;
-    default:
-      const {scene}=useGLTF(shape.shape)
-      geometry = <primitive object={scene} />;
-      break;
-  }
-  return geometry;
-};
-
-const GetModelUser = (shape) => {
-  let geometry;
-  switch (shape.toLowerCase()) {
-    case "box":
-      geometry = "<boxGeometry  />";
-      break;
-    case "sphere":
-      geometry = "<sphereGeometry />";
-      break;
-    case "plane":
-      geometry = "<planeGeometry />";
-      break;
-    case "circle":
-      geometry = " <circleGeometry />";
-      break;
-    case "cone":
-      geometry = "<coneGeometry  />";
-      break;
-    case "cylinder":
-      geometry = "<cylinderGeometry />";
-      break;
-    case "torus":
-      geometry = "<torusGeometry  />";
-      break;
-    case "torus-knot":
-      geometry = "<torusKnotGeometry  />";
-      break;
-    case "dodecahedron":
-      geometry = "<dodecahedronGeometry  />";
-      break;
-    case "icosahedron":
-      geometry = "<icosahedronGeometry  />";
-      break;
-    case "octahedron":
-      geometry = " <octahedronGeometry  />";
-      break;
-    case "tetrahedron":
-      geometry = "<tetrahedronGeometry  />";
-      break;
-    case "ring":
-      geometry = "<ringGeometry />";
-      break;
-    case "capsule":
-      geometry = "<capsuleGeometry  />";
-      break;
-    default:
-      geometry = "<boxGeometry  />";
-  }
-  return geometry.toString();
-};
 
 
-const GetModelUser2 = ( shape ) => {
-  // console.log(shape)
-  let geometry;
-  switch (shape.toLowerCase()) {
-    case "box":
-      geometry = "BoxGeometry(1, 2, 32)";
-      break;
-    case "sphere":
-      geometry = "SphereGeometry(1.5, 32, 32)";
-      break;
-    case "plane":
-      geometry = "PlaneGeometry(4, 4)";
-      break;
-    case "circle":
-      geometry = "CircleGeometry(2, 32)";
-      break;
-    case "cone":
-      geometry = "ConeGeometry(1.5, 3, 32)";
-      break;
-    case "cylinder":
-      geometry = "CylinderGeometry(1, 1, 3, 32)";
-      break;
-    case "torus":
-      geometry = "TorusGeometry(1, 0.4, 16, 100)";
-      break;
-    case "torus-knot":
-      geometry = "TorusKnotGeometry(1, 0.3, 100, 16)";
-      break;
-    case "dodecahedron":
-      geometry = "DodecahedronGeometry(1.5)";
-      break;
-    case "icosahedron":
-      geometry = "IcosahedronGeometry(1.5)";
-      break;
-    case "octahedron":
-      geometry = "OctahedronGeometry(1.5)";
-      break;
-    case "tetrahedron":
-      geometry = "TetrahedronGeometry(1.5)";
-      break;
-    case "ring":
-      geometry = "RingGeometry(1, 2, 32)";
-      break;
-    case "capsule":
-      geometry = "CapsuleGeometry(1, 2, 8, 16)";
-      break;
-    default:
-      geometry = "BoxGeometry(1, 2, 32)";
-  }
 
-  return geometry;
-};
+
+
+
 
 function Model({ settings, shape }) {
   const modelRef = useRef();
-
+ const {scene}=useGLTF(shape);
   useEffect(() => {
     if (modelRef.current) {
       modelRef.current.scale.set(
@@ -202,7 +51,7 @@ function Model({ settings, shape }) {
   }, [settings]);
   return (
     <mesh ref={modelRef}>
-      <GetModel shape={shape} />
+      <primitive object={scene} />
       <meshStandardMaterial color={settings.modelColor} side={THREE.DoubleSide} />
     </mesh>
   );
@@ -234,7 +83,7 @@ function Scene() {
     positionX: 0,
     positionY: 0,
     positionZ: 0,
-    modelColor: "#4169E1",
+    modelColor: "#FFFFFF",
     metalness: 0.5,
     roughness: 0.5,
     emissiveColor: "#000000",
@@ -265,13 +114,13 @@ function Scene() {
       gui.current.add(settings, "emissiveIntensity", 0, 5).onChange((val) => {
         setSettings((prev) => ({ ...prev, emissiveIntensity: val }));
       });
-      gui.current.add(settings, "positionX", -10, 10).onChange((val) => {
+      gui.current.add(settings, "positionX", -30, 30).onChange((val) => {
         setSettings((prev) => ({ ...prev, positionX: val }));
       });
-      gui.current.add(settings, "positionY", -10, 10).onChange((val) => {
+      gui.current.add(settings, "positionY", -30, 30).onChange((val) => {
         setSettings((prev) => ({ ...prev, positionY: val }));
       });
-      gui.current.add(settings, "positionZ", -10, 10).onChange((val) => {
+      gui.current.add(settings, "positionZ", -30, 30).onChange((val) => {
         setSettings((prev) => ({ ...prev, positionZ: val }));
       });
       gui.current.add(settings, "rotationX", 0, Math.PI * 2).onChange((val) => {
@@ -305,7 +154,7 @@ function Scene() {
   
   function Model() {
   const modelRef = useRef();
-  
+  const {scene}=useGLTF("${shape}"); // Replace with model path gltf or glb
   useEffect(() => {
   if (modelRef.current) {
     modelRef.current.scale.set(${settings.modelScale}, ${
@@ -330,7 +179,7 @@ function Scene() {
   }, []);
   
   return (<mesh ref={modelRef}>
-          ${GetModelUser(shape)}
+          <primitive object={scene} />
           <meshStandardMaterial color={"${settings.modelColor}"}  />
         </mesh>);
   }
@@ -374,10 +223,86 @@ function Scene() {
   
   export default Scene;
   `,
-    Next: "Next",
+    Next: `
+  "use client";
+  import React, { useRef, useState, useEffect } from "react";
+  import { Canvas, useThree } from "@react-three/fiber";
+  import { useGLTF, OrbitControls } from "@react-three/drei";
+  
+  function Model() {
+  const modelRef = useRef();
+  const {scene}=useGLTF("${shape}"); // Replace with model path gltf or glb
+  useEffect(() => {
+  if (modelRef.current) {
+    modelRef.current.scale.set(${settings.modelScale}, ${
+      settings.modelScale
+    }, ${settings.modelScale});
+    modelRef.current.rotation.set(${settings.rotationX}, ${
+      settings.rotationY
+    }, ${settings.rotationZ});
+    modelRef.current.position.set(${settings.positionX}, ${
+      settings.positionY
+    }, ${settings.positionZ});
+    modelRef.current.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material.color.set('${settings.modelColor}');
+        child.material.emissive.set('${settings.emissiveColor}');
+        child.material.emissiveIntensity = ${settings.emissiveIntensity};
+        child.material.castShadow = true;
+      }
+      });
+    
+  }
+  }, []);
+  
+  return (<mesh ref={modelRef}>
+          <primitive object={scene} />
+          <meshStandardMaterial color={"${settings.modelColor}"}  />
+        </mesh>);
+  }
+  
+  function CameraController({ fov }) {
+  const { camera } = useThree();
+  
+  useEffect(() => {
+  camera.fov = fov;
+  camera.updateProjectionMatrix();
+  }, [fov]);
+  
+  return null;
+  }
+  
+  const Page=()=> {
+  return (
+  <div  style={{position:"absolute",height:"100vh",width:"100vw",inset:"0"}}>
+    <Canvas camera={{ fov: ${settings.cameraFOV}, position: [0, 0, 10] }}>
+      <CameraController fov={${settings.cameraFOV}} />
+      <directionalLight
+        position={[10, 10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <directionalLight
+        position={[-10, -10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <ambientLight intensity={2} />
+      <pointLight position={[10, 10, 10]} />
+      <Model  />
+      <OrbitControls />
+    </Canvas>
+  </div>
+  );
+  }
+  
+  export default Page;`,
     Vanilla: `
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const scene = new THREE.Scene();
 
@@ -403,14 +328,16 @@ const pointLight = new THREE.PointLight(0xffffff, 1);
 pointLight.position.set(10, 10, 10);
 scene.add(pointLight);
 
-const geometry = new THREE.${GetModelUser2(shape)};
-const material = new THREE.MeshStandardMaterial({ color: "${settings.modelColor}", metalness: ${settings.metalness}, roughness: ${settings.roughness}, emissive: "${settings.emissiveColor}", emissiveIntensity: ${settings.emissiveIntensity} });
-const shape = new THREE.Mesh(geometry, material);
-shape.rotation.set(${settings.rotationX}, ${settings.rotationY}, ${settings.rotationZ});
-shape.position.set(${settings.positionX}, ${settings.positionY}, ${settings.positionZ});
-shape.scale.set(${settings.modelScale}, ${settings.modelScale}, ${settings.modelScale});
-shape.castShadow = true;
-scene.add(shape);
+const loader = new GLTFLoader();
+loader.load("${shape}", (gltf) => {
+  const model = gltf.scene;
+  model.position.set(${settings.positionX}, ${settings.positionY}, ${settings.positionZ}); 
+  model.rotation.set(${settings.rotationX}, ${settings.rotationY}, ${settings.rotationZ}); 
+  model.scale.set(${settings.modelScale}, ${settings.modelScale}, ${settings.modelScale}); 
+  model.castsShadow = true;
+  
+  scene.add(model);
+});
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
