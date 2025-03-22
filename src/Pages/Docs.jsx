@@ -57,7 +57,7 @@ const CodeBlock = ({ code }) => {
 
             className=" h-8 right-2 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded"
           >
-            <i class="ri-clipboard-line"></i>
+            <i className="ri-clipboard-line"></i>
           </button>}
         </div>
       ))}
@@ -78,7 +78,7 @@ const InstallationCard = ({ activeTab, installationSteps, setActiveTab }) => {
 
   return (
     <motion.div
-      className="bg-gray-800 rounded-xl shadow-2xl p-6 w-[750px] max-w-full"
+      className="bg-gray-800 rounded-xl shadow-2xl p-6 lg:w-[750px]  max-w-full"
       initial="hidden"
       animate="visible"
       variants={cardVariants}
