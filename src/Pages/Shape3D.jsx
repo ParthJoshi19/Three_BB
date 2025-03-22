@@ -24,7 +24,7 @@ const GetShapes = (shape) => {
   let geometry;
   const navigate = useNavigate();
 
-  console.log(shape.shape);
+//   console.log(shape.shape);
   switch (shape.shape.toLowerCase()) {
     case "box":
       geometry = <boxGeometry args={[2, 2, 2]} />;

@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "./components/Home";
-import BottleModel from "./components/Model";
+import CustomizeShape from "./Pages/CustomizesShape"
 import { useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 // import Scene from './components/Model2'
@@ -14,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Docs />} />
         <Route path="/shapes3d" element={<Shape3D />} />
+        <Route path="/customize" element={<CustomizeShape />} />
       </Routes>
     </Router>
   );
