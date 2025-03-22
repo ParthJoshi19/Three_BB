@@ -1,98 +1,191 @@
 import { Canvas } from "@react-three/fiber";
-import React from "react";
-import { useState } from "react";
-import { ParticleSystem } from "./../components/ui-3d/particle-system";
-import { OrbitControls, Text, GradientTexture, Html } from "@react-three/drei";
+import { useState, useRef } from "react";
+import {
+  OrbitControls,
+  GradientTexture,
+  Html,
+  Float,
+  Environment,
+} from "@react-three/drei";
+import { motion } from "framer-motion";
+import { useFrame } from "@react-three/fiber";
+
+const ParticleSystem = ({ count, color, size, speed }) => {
+  const particlesRef = useRef(null);
+
+  useFrame(() => {
+    if (particlesRef.current) {
+      particlesRef.current.rotation.y += speed;
+    }
+  });
+
+  return (
+    <group ref={particlesRef}>
+      {Array.from({ length: count }).map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20,
+          ]}
+        >
+          <sphereGeometry args={[size * Math.random(), 8, 8]} />
+          <meshBasicMaterial color={color} transparent opacity={0.6} />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+const CodeBlock = ({ code }) => {
+  const [copied, setCopied] = useState(false);
+  // console.log(code)
+  const copyToClipboard = (line) => {
+    navigator.clipboard.writeText(line);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm text-left overflow-auto max-h-50 w-full">
+      {copied && <div className="bg-[rgba(81,84,255,0.3)] w-fit p-2 rounded-lg border-2 border-blue-600 ">Copied</div>}
+      {code.split("\n").map((line, i) => (
+        <div key={i} className="text-gray-300 flex justify-between">
+          {line}
+          {!line.match("OR") && <button
+            onClick={()=>copyToClipboard(line)}
+
+            className=" h-8 right-2 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded"
+          >
+            <i class="ri-clipboard-line"></i>
+          </button>}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const InstallationCard = ({ activeTab, installationSteps, setActiveTab }) => {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const tabVariants = {
+    inactive: { backgroundColor: "#1f2937", color: "#e5e7eb" },
+    active: { backgroundColor: "#3b82f6", color: "#ffffff", scale: 1.05 },
+  };
+
+  return (
+    <motion.div
+      className="bg-gray-800 rounded-xl shadow-2xl p-6 w-[750px] max-w-full"
+      initial="hidden"
+      animate="visible"
+      variants={cardVariants}
+    >
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        Installation Guide
+      </h2>
+
+      <div className="flex space-x-2 mb-6">
+        {Object.keys(installationSteps).map((tab) => (
+          <motion.button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className="px-4 py-2 rounded-md font-medium flex-1 transition-all"
+            variants={tabVariants}
+            initial="inactive"
+            animate={activeTab === tab ? "active" : "inactive"}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {tab === "react" ? "React" : tab === "next" ? "Next.js" : "Vanilla"}
+          </motion.button>
+        ))}
+      </div>
+
+      <motion.div
+        key={activeTab}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <CodeBlock code={installationSteps[activeTab]} />
+      </motion.div>
+
+      <div className="mt-6 text-gray-300 text-sm">
+        <p className="mb-2">
+          <span className="font-semibold text-blue-400">Tip:</span> Make sure
+          you have Node.js installed before running these commands.
+        </p>
+        <p>
+          Check out the{" "}
+          <a href="#" className="text-blue-400 hover:underline">
+            documentation
+          </a>{" "}
+          for more details.
+        </p>
+      </div>
+    </motion.div>
+  );
+};
 
 const Docs = () => {
-  const position = [0, 0, 0];
-  const rotation = [0, 0, 0];
-  const scale = [1, 1, 1];
-  const width = 7;
-  const height = 8;
-  const depth = 0.1;
-  const textColor = "#FFFFFF";
-  const title = "Installation Guide";
+  const [activeTab, setActiveTab] = useState(0);
 
   const installationSteps = [
     `npm install three @react-three/fiber @react-three/drei`,
-    `npm install three @react-three/fiber @react-three/drei\nUse dynamic imports with SSR disabled for Three.js components`,
-    `npm install three\nOr use CDN:\n<script src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'></script>`,
+    `npm install three @react-three/fiber @react-three/drei`,
+    `npm install three\n  OR \n<script src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'></script>`,
   ];
 
-  const [activeTab, setActiveTab] = useState("react");
-
   return (
-    <div className="w-screen h-screen">
-      <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
-        <color attach="background" args={["#000"]} />
+    <div className="w-full h-screen bg-gradient-to-b from-gray-900 to-black">
+      <Canvas camera={{ position: [0, 0, 10], fov: 75 }} shadows dpr={[1, 2]}>
+        <color attach="background" args={["#050816"]} />
+        <fog attach="fog" args={["#050816", 10, 30]} />
 
-        <group position={position} rotation={rotation} scale={scale}>
-          <mesh castShadow receiveShadow>
-            <boxGeometry args={[width, height, depth]} />
-            <ambientLight intensity={2} />
-            <meshStandardMaterial>
-              <GradientTexture
-                attach="map"
-                stops={[0, 1]}
-                colors={["#222222", "#444444"]}
-              />
-            </meshStandardMaterial>
-          </mesh>
+        <ambientLight intensity={0.5} />
+        <directionalLight
+          position={[5, 5, 5]}
+          intensity={1}
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
 
-          <Html>
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
-              {Object.keys(installationSteps).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 font-semibold rounded ${
-                    activeTab === tab
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-black"
-                  }`}
-                >
-                  {tab.toUpperCase()}
-                </button>
-              ))}
-            </div>
+        <group position={[0, 0, 0]}>
+          <Html transform position={[0, 0, 1]} className="pointer-events-auto">
+            <InstallationCard
+              activeTab={activeTab}
+              installationSteps={installationSteps}
+              setActiveTab={setActiveTab}
+            />
           </Html>
-
-          <Text
-            position={[0, height / 2.5, depth / 2 + 0.01]}
-            fontSize={0.4}
-            color={textColor}
-            anchorX="center"
-            anchorY="middle"
-          >
-            {title}
-          </Text>
-
-          {installationSteps.map((step, index) => (
-            <Text
-              key={index}
-              position={[0, height / 4 - index * 0.5, depth / 2 + 0.01]}
-              fontSize={0.2}
-              color={textColor}
-              anchorX="center"
-              anchorY="middle"
-              maxWidth={width * 0.9}
-              textAlign="center"
-            >
-              {step}
-            </Text>
-          ))}
         </group>
 
-        <OrbitControls />
-
         <ParticleSystem
-          count={1000}
-          color={"#FFFFFF"}
-          size={0.15}
-          speed={0.0005}
+          count={200}
+          color={"#4f86f7"}
+          size={0.05}
+          speed={0.0002}
         />
+
+        <OrbitControls
+          enableZoom={true}
+          enablePan={false}
+          minPolarAngle={Math.PI / 4}
+          maxPolarAngle={Math.PI / 1.5}
+          minDistance={8}
+          maxDistance={15}
+        />
+
+        <Environment preset="city" />
       </Canvas>
+
+      <div className="absolute bottom-4 left-4 text-white text-sm opacity-70">
+        Use mouse to rotate the view
+      </div>
     </div>
   );
 };
