@@ -80,7 +80,7 @@ export function Menu3D({
               position={[0, 0, itemDepth / 2 + 0.01]}
               fontSize={0.08}
               anchorX="center"
-              color={"#fff "}
+              color={"#FFFFFF"}
               anchorY="middle"
             >
               {item.label}

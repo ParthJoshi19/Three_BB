@@ -6,6 +6,7 @@ import { Canvas } from "@react-three/fiber";
 // import Scene from './components/Model2'
 import Shape3D from "./Pages/Shape3D";
 import Docs from "./Pages/Docs";
+import Models3D from "./Pages/Models3d";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/home" element={<Docs />} />
         <Route path="/shapes3d" element={<Shape3D />} />
         <Route path="/customize" element={<CustomizeShape />} />
+        <Route path="/3dmodels" element={<Models3D />} />
       </Routes>
     </Router>
   );

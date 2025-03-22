@@ -45,7 +45,6 @@ export default function Home() {
             )}
           </Suspense>
 
-          {/* <Suspense fallback={null}> */}
             <OrbitControls
               enablePan
               enableZoom
