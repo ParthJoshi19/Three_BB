@@ -4,10 +4,9 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls, Stars, Edges, Html } from "@react-three/drei";
 import GUI from "lil-gui";
 import { useLocation } from "react-router-dom";
-// import * as THREE from "three";
-// 3D Model Component
-
-
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { tomorrowNight } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import * as THREE from "three";
 const GetModel = (shape) => {
   let geometry;
   switch (shape.shape.toLowerCase()) {
@@ -36,16 +35,16 @@ const GetModel = (shape) => {
       geometry = <torusKnotGeometry args={[1, 0.3, 100, 16]} />;
       break;
     case "dodecahedron":
-      geometry = <dodecahedronGeometry  />;
+      geometry = <dodecahedronGeometry />;
       break;
     case "icosahedron":
-      geometry = <icosahedronGeometry  />;
+      geometry = <icosahedronGeometry />;
       break;
     case "octahedron":
-      geometry = <octahedronGeometry  />;
+      geometry = <octahedronGeometry />;
       break;
     case "tetrahedron":
-      geometry = <tetrahedronGeometry  />;
+      geometry = <tetrahedronGeometry />;
       break;
     case "ring":
       geometry = <ringGeometry args={[1, 2, 32]} />;
@@ -72,7 +71,7 @@ const GetModelUser = (shape) => {
       geometry = "<planeGeometry />";
       break;
     case "circle":
-      geometry =" <circleGeometry />";
+      geometry = " <circleGeometry />";
       break;
     case "cone":
       geometry = "<coneGeometry  />";
@@ -93,7 +92,7 @@ const GetModelUser = (shape) => {
       geometry = "<icosahedronGeometry  />";
       break;
     case "octahedron":
-      geometry =" <octahedronGeometry  />";
+      geometry = " <octahedronGeometry  />";
       break;
     case "tetrahedron":
       geometry = "<tetrahedronGeometry  />";
@@ -108,6 +107,60 @@ const GetModelUser = (shape) => {
       geometry = "<boxGeometry  />";
   }
   return geometry.toString();
+};
+
+
+const GetModelUser2 = ( shape ) => {
+  // console.log(shape)
+  let geometry;
+  switch (shape.toLowerCase()) {
+    case "box":
+      geometry = "BoxGeometry(1, 2, 32)";
+      break;
+    case "sphere":
+      geometry = "SphereGeometry(1.5, 32, 32)";
+      break;
+    case "plane":
+      geometry = "PlaneGeometry(4, 4)";
+      break;
+    case "circle":
+      geometry = "CircleGeometry(2, 32)";
+      break;
+    case "cone":
+      geometry = "ConeGeometry(1.5, 3, 32)";
+      break;
+    case "cylinder":
+      geometry = "CylinderGeometry(1, 1, 3, 32)";
+      break;
+    case "torus":
+      geometry = "TorusGeometry(1, 0.4, 16, 100)";
+      break;
+    case "torus-knot":
+      geometry = "TorusKnotGeometry(1, 0.3, 100, 16)";
+      break;
+    case "dodecahedron":
+      geometry = "DodecahedronGeometry(1.5)";
+      break;
+    case "icosahedron":
+      geometry = "IcosahedronGeometry(1.5)";
+      break;
+    case "octahedron":
+      geometry = "OctahedronGeometry(1.5)";
+      break;
+    case "tetrahedron":
+      geometry = "TetrahedronGeometry(1.5)";
+      break;
+    case "ring":
+      geometry = "RingGeometry(1, 2, 32)";
+      break;
+    case "capsule":
+      geometry = "CapsuleGeometry(1, 2, 8, 16)";
+      break;
+    default:
+      geometry = "BoxGeometry(1, 2, 32)";
+  }
+
+  return geometry;
 };
 
 function Model({ settings, shape }) {
@@ -139,14 +192,15 @@ function Model({ settings, shape }) {
           child.material.emissiveIntensity = settings.emissiveIntensity;
           child.material.castShadow = true;
           child.material.receiveShadow = true;
+          child.material.emissive.set(settings.emissiveColor);
         }
       });
     }
   }, [settings]);
   return (
     <mesh ref={modelRef}>
-        <GetModel shape={shape} />
-      <meshStandardMaterial color={settings.modelColor} />
+      <GetModel shape={shape} />
+      <meshStandardMaterial color={settings.modelColor} side={THREE.DoubleSide} />
     </mesh>
   );
 }
@@ -164,8 +218,11 @@ function CameraController({ fov }) {
 
 function Scene() {
   const location = useLocation();
-  const { shape } = location.state;
 
+  const [active, setActive] = useState("React");
+  const { shape } = location.state;
+  
+  const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState({
     modelScale: 1,
     rotationX: 0,
@@ -234,76 +291,152 @@ function Scene() {
     };
   }, []);
 
-  // Function to log the scene settings
   const logCode = () => {
-    console.log(`
-      Scene Settings:
-      -----------------------------
-import React, { useRef, useState, useEffect } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
-import { useGLTF, OrbitControls } from "@react-three/drei";
-
-function Model() {
+    setOpen(!open);
+  };
+  const codesSnips = {
+    React: `
+  import React, { useRef, useState, useEffect } from "react";
+  import { Canvas, useThree } from "@react-three/fiber";
+  import { useGLTF, OrbitControls } from "@react-three/drei";
+  
+  function Model() {
   const modelRef = useRef();
-
+  
   useEffect(() => {
-    if (modelRef.current) {
-      modelRef.current.scale.set(${settings.modelScale}, ${settings.modelScale}, ${settings.modelScale});
-      modelRef.current.rotation.set(${settings.rotationX}, ${settings.rotationY}, ${settings.rotationZ});
-      modelRef.current.position.set(${settings.positionX}, ${settings.positionY}, ${settings.positionZ});
-      modelRef.current.traverse((child) => {
-        if (child.isMesh) {
-          child.material.color.set('${settings.modelColor}');
-        }
+  if (modelRef.current) {
+    modelRef.current.scale.set(${settings.modelScale}, ${
+      settings.modelScale
+    }, ${settings.modelScale});
+    modelRef.current.rotation.set(${settings.rotationX}, ${
+      settings.rotationY
+    }, ${settings.rotationZ});
+    modelRef.current.position.set(${settings.positionX}, ${
+      settings.positionY
+    }, ${settings.positionZ});
+    modelRef.current.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material.color.set('${settings.modelColor}');
+        child.material.emissive.set('${settings.emissiveColor}');
+        child.material.emissiveIntensity = ${settings.emissiveIntensity};
+        child.material.castShadow = true;
+      }
       });
-    }
+    
+  }
   }, []);
-
+  
   return (<mesh ref={modelRef}>
-            ${GetModelUser(shape)}
-            <meshStandardMaterial color={"${settings.modelColor}"} />
-          </mesh>);
-}
-
-function CameraController({ fov }) {
+          ${GetModelUser(shape)}
+          <meshStandardMaterial color={"${settings.modelColor}"}  />
+        </mesh>);
+  }
+  
+  function CameraController({ fov }) {
   const { camera } = useThree();
-
+  
   useEffect(() => {
-    camera.fov = fov;
-    camera.updateProjectionMatrix();
+  camera.fov = fov;
+  camera.updateProjectionMatrix();
   }, [fov]);
-
+  
   return null;
-}
-
-const Scene=()=> {
+  }
+  
+  const Scene=()=> {
   return (
-    <div  style={{position:"absolute",height:"100vh",width:"100vw",inset:"0"}}>
-      <Canvas camera={{ fov: ${settings.cameraFOV}, position: [0, 0, 10] }}>
-        <CameraController fov={${settings.cameraFOV}} />
-        <directionalLight
-          position={[10, 10, 25]}
-          intensity={2}
-          color="white"
-          castShadow
-        />
-        <directionalLight
-          position={[-10, -10, 25]}
-          intensity={2}
-          color="white"
-          castShadow
-        />
-        <ambientLight intensity={2} />
-        <pointLight position={[10, 10, 10]} />
-        <Model  />
-        <OrbitControls />
-      </Canvas>
-    </div>
+  <div  style={{position:"absolute",height:"100vh",width:"100vw",inset:"0"}}>
+    <Canvas camera={{ fov: ${settings.cameraFOV}, position: [0, 0, 10] }}>
+      <CameraController fov={${settings.cameraFOV}} />
+      <directionalLight
+        position={[10, 10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <directionalLight
+        position={[-10, -10, 25]}
+        intensity={2}
+        color="white"
+        castShadow
+      />
+      <ambientLight intensity={2} />
+      <pointLight position={[10, 10, 10]} />
+      <Model  />
+      <OrbitControls />
+    </Canvas>
+  </div>
   );
+  }
+  
+  export default Scene;
+  `,
+    Next: "Next",
+    Vanilla: `
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(${settings.cameraFOV}, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0,0,10);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const directionalLight1 = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight1.position.set(10, 10, 25);
+scene.add(directionalLight1);
+
+const directionalLight2 = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight2.position.set(-10, -10, 25);
+scene.add(directionalLight2);
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(10, 10, 10);
+scene.add(pointLight);
+
+const geometry = new THREE.${GetModelUser2(shape)};
+const material = new THREE.MeshStandardMaterial({ color: "${settings.modelColor}", metalness: ${settings.metalness}, roughness: ${settings.roughness}, emissive: "${settings.emissiveColor}", emissiveIntensity: ${settings.emissiveIntensity} });
+const shape = new THREE.Mesh(geometry, material);
+shape.rotation.set(${settings.rotationX}, ${settings.rotationY}, ${settings.rotationZ});
+shape.position.set(${settings.positionX}, ${settings.positionY}, ${settings.positionZ});
+shape.scale.set(${settings.modelScale}, ${settings.modelScale}, ${settings.modelScale});
+shape.castShadow = true;
+scene.add(shape);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.minDistance = 5;
+controls.maxDistance = 50;
+controls.maxPolarAngle = Math.PI / 2;
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update(); 
+  renderer.render(scene, camera);
 }
 
-export default Scene;
-    `);
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+`,
+  };
+
+  const [copied, setCopied] = useState(false);
+  const copyToClipboard = (line) => {
+    navigator.clipboard.writeText(line);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -338,6 +471,34 @@ export default Scene;
         <OrbitControls />
       </Canvas>
 
+      {
+        <div
+          className={`w-[60%] group overflow-scroll overflow-x-hidden h-[80%] transition-all duration-300 left-[20%] top-[10%] rounded-lg absolute bg-[rgba(255,255,255,0.09)] border-2 border-white ${
+            !open ? "scale-0" : "scale-105"
+          }`}
+        >
+          <div className="ml-10 mt-10 flex gap-20 w-full h-fit">
+            {["React", "Next", "Vanilla"].map((tab) => (
+              <div
+                key={tab}
+                className="border-2 px-3 py-1 border-blue-600 bg-[rgba(83,97,255,0.5)] rounded-xl text-white cursor-pointer"
+                onClick={() => setActive(tab)}
+              >
+                {tab}
+              </div>
+            ))}
+          </div>
+
+          <div className="overflow-auto relative h-fit bg-[rgba(255,255,255,80%)] m-4 rounded-lg border-2 border-white">
+            {copied && <div className="absolute w-fit left-2 rounded-xl bg-[rgba(83,97,255,0.5)] border-2 border-blue-600 p-1 text-xs"> copied</div>}
+            <div onClick={() => copyToClipboard(codesSnips[active])} className="absolute right-3 text-white bg-[rgba(255,255,255,0.5)] px-2 py-1 border-2 border-white rounded-xl cursor-pointer"><i className="ri-clipboard-line"></i></div>
+            <pre>
+              <SyntaxHighlighter style={tomorrowNight}>{codesSnips[active]}</SyntaxHighlighter>
+            </pre>
+          </div>
+        </div>
+      }
+
       <button
         onClick={logCode}
         style={{
@@ -352,7 +513,7 @@ export default Scene;
           cursor: "pointer",
         }}
       >
-        Log Code
+        Get Code
       </button>
     </div>
   );

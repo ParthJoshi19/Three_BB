@@ -30,12 +30,10 @@ export default function Home() {
         </div>
       ) : null}
 
-      <div className="w-full h-screen">
-        <Canvas camera={{ position: [0, 0, 4], fov: 60 }}>
+      <div className="w-full flex justify-center items-center h-screen">
+        <Canvas camera={{ position: [1, 1, 4], fov: 60 }}>
           <color attach="background" args={["#000"]} />
 
-          {/* <Environment preset="night" /> */}
-          {/* <Stars />  */}
           <pointLight position={[0,5,0]} intensity={2}/>
           <Suspense>
             {!showModelViewer ? (
@@ -98,11 +96,7 @@ function ComponentsShowcase({ onShowModelViewer }) {
         speed={1.5}
         color={"#DB2777"}
       />
-
       <ParticleSystem count={1000} color={"#fff"} size={0.15} speed={0.0005} />
-
-      
-
     </group>
   );
 }
