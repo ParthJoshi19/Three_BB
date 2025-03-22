@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { useState, useRef } from "react";
+import { ParticleSystem } from "../components/ui-3d/particle-system";
 import {
   OrbitControls,
   GradientTexture,
@@ -10,33 +11,33 @@ import {
 import { motion } from "framer-motion";
 import { useFrame } from "@react-three/fiber";
 
-const ParticleSystem = ({ count, color, size, speed }) => {
-  const particlesRef = useRef(null);
+// const ParticleSystem = ({ count, color, size, speed }) => {
+//   const particlesRef = useRef(null);
 
-  useFrame(() => {
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y += speed;
-    }
-  });
+//   useFrame(() => {
+//     if (particlesRef.current) {
+//       particlesRef.current.rotation.y += speed;
+//     }
+//   });
 
-  return (
-    <group ref={particlesRef}>
-      {Array.from({ length: count }).map((_, i) => (
-        <mesh
-          key={i}
-          position={[
-            (Math.random() - 0.5) * 20,
-            (Math.random() - 0.5) * 20,
-            (Math.random() - 0.5) * 20,
-          ]}
-        >
-          <sphereGeometry args={[size * Math.random(), 8, 8]} />
-          <meshBasicMaterial color={color} transparent opacity={0.6} />
-        </mesh>
-      ))}
-    </group>
-  );
-};
+//   return (
+//     <group ref={particlesRef}>
+//       {Array.from({ length: count }).map((_, i) => (
+//         <mesh
+//           key={i}
+//           position={[
+//             (Math.random() - 0.5) * 20,
+//             (Math.random() - 0.5) * 20,
+//             (Math.random() - 0.5) * 20,
+//           ]}
+//         >
+//           <sphereGeometry args={[size * Math.random(), 8, 8]} />
+//           <meshBasicMaterial color={color} transparent opacity={0.6} />
+//         </mesh>
+//       ))}
+//     </group>
+//   );
+// };
 
 const CodeBlock = ({ code }) => {
   const [copied, setCopied] = useState(false);
@@ -48,17 +49,22 @@ const CodeBlock = ({ code }) => {
   };
   return (
     <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm text-left overflow-auto max-h-50 w-full">
-      {copied && <div className="bg-[rgba(81,84,255,0.3)] w-fit p-2 rounded-lg border-2 border-blue-600 ">Copied</div>}
+      {copied && (
+        <div className="bg-[rgba(81,84,255,0.3)] w-fit p-2 rounded-lg border-2 border-blue-600 ">
+          Copied
+        </div>
+      )}
       {code.split("\n").map((line, i) => (
         <div key={i} className="text-gray-300 flex justify-between">
           {line}
-          {!line.match("OR") && <button
-            onClick={()=>copyToClipboard(line)}
-
-            className=" h-8 right-2 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded"
-          >
-            <i className="ri-clipboard-line"></i>
-          </button>}
+          {!line.match("OR") && (
+            <button
+              onClick={() => copyToClipboard(line)}
+              className=" h-8 right-2 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded"
+            >
+              <i className="ri-clipboard-line"></i>
+            </button>
+          )}
         </div>
       ))}
     </div>
@@ -78,7 +84,7 @@ const InstallationCard = ({ activeTab, installationSteps, setActiveTab }) => {
 
   return (
     <motion.div
-      className="bg-gray-800 rounded-xl shadow-2xl p-6 lg:w-[750px]  max-w-full"
+      className="bg-transparent border-2 border-blue-600 rounded-xl shadow-2xl p-6 lg:w-[750px]  max-w-full"
       initial="hidden"
       animate="visible"
       variants={cardVariants}
@@ -87,19 +93,19 @@ const InstallationCard = ({ activeTab, installationSteps, setActiveTab }) => {
         Installation Guide
       </h2>
 
-      <div className="flex space-x-2 mb-6">
-        {Object.keys(installationSteps).map((tab) => (
+      <div className="flex space-x-4 mb-6">
+        {Object.keys(installationSteps).map((tab, index) => (
           <motion.button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => setActiveTab(index)}
             className="px-4 py-2 rounded-md font-medium flex-1 transition-all"
             variants={tabVariants}
             initial="inactive"
-            animate={activeTab === tab ? "active" : "inactive"}
+            animate={activeTab === index ? "active" : "inactive"}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {tab === "react" ? "React" : tab === "next" ? "Next.js" : "Vanilla"}
+            {index === 0 ? "React" : index === 1 ? "Next.js" : "Vanilla"}
           </motion.button>
         ))}
       </div>
@@ -134,14 +140,16 @@ const Docs = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const installationSteps = [
-    `npm install three @react-three/fiber @react-three/drei`,
-    `npm install three @react-three/fiber @react-three/drei`,
-    `npm install three\n  OR \n<script src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'></script>`,
+    "npm install three @react-three/fiber @react-three/drei",
+    "npm install three @react-three/fiber @react-three/drei",
+    "npm install three\n  OR \n<script src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js'></script>",
   ];
 
   return (
-    <div className="w-full h-screen bg-gradient-to-b from-gray-900 to-black">
-      <Canvas camera={{ position: [0, 0, 10], fov: 75 }} shadows dpr={[1, 2]}>
+    <div className="w-full h-screen bg-transparent">
+          <div className="z-10 text-white absolute" > BACK</div>
+
+      <Canvas camera={{ position: [0, 0, 10], fov: 90 }} shadows dpr={[1, 2]}>
         <color attach="background" args={["#050816"]} />
         <fog attach="fog" args={["#050816", 10, 30]} />
 
@@ -165,9 +173,9 @@ const Docs = () => {
         </group>
 
         <ParticleSystem
-          count={200}
+          count={1000}
           color={"#4f86f7"}
-          size={0.05}
+          size={0.15}
           speed={0.0002}
         />
 
