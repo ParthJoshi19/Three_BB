@@ -14,7 +14,7 @@ export function Button3D({
   height = 0.3,
   depth = 0.1,
   label,
-  color = "#4F46E5",
+  color = "#00FFFF",
   hoverColor = "#6366F1",
   textColor = "#FFFFFF",
   onClick,

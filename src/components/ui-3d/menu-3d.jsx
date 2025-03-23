@@ -71,6 +71,7 @@ export function Menu3D({
             >
               <boxGeometry args={[itemWidth, itemHeight, itemDepth]} />
               <meshStandardMaterial
+                color={"#00FFFF"}
                 roughness={0.3}
                 metalness={0.1}
               />
@@ -80,7 +81,7 @@ export function Menu3D({
               position={[0, 0, itemDepth / 2 + 0.01]}
               fontSize={0.08}
               anchorX="center"
-              color={"#FFFFFF"}
+              color={"#111111"}
               anchorY="middle"
             >
               {item.label}
