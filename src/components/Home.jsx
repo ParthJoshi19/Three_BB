@@ -23,7 +23,7 @@ export default function Home() {
       <div className="absolute top-10 right-4 z-10 flex gap-2"></div>
 
       <div className="w-full flex justify-center items-center h-screen">
-        <Canvas className="bg-gradient-to-b from-[#0D1B2A] via-[#0D1B2A] to-[#000]" camera={{ position: [1, 2, 8], fov: 35 }}>
+        <Canvas className="bg-gradient-to-b from-[#0D1B2A] via-[#0D1B2A] to-[#000]" camera={{ position: [1, 2, 8], fov: window.innerWidth<768?60:35 }}>
           <mesh>
             <GradientTexture attach="map" stops={[0, 1]} colors={["#00FF00"]} />
           <Suspense>
