@@ -68,6 +68,11 @@ const Models3D = () => {
   return (
     <div className="min-h-screen max-w-screen bg-gradient-to-b from-[#0D1B2A] via-[#0D1B2A] to-[#000] flex flex-col items-center py-10">
       <h1 className="text-3xl text-white font-bold mb-8">3D Shapes Gallery</h1>
+      <p className="text-xl text-white">
+        To use Models Simply download Model then click on customize button , customize Model and get
+        Code!!!
+      </p>
+      <p className="text-2xl font-bold text-white">Happy Coding!!!</p>
       <div className="pointer-events-none absolute w-full h-screen">
         <Canvas className="absolute w-screen h-screen pointer-events-none">
           <ambientLight intensity={2} />
