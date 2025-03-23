@@ -66,19 +66,19 @@ export function Card3D({
       </mesh>
 
       <Text
-        position={[0, height / 3, depth / 2 + 0.01]}
-        fontSize={0.12}
+        position={[0, height / 10, depth / 2 + 0.01]}
+        fontSize={0.15}
         color={textColor}
         anchorX="center"
         anchorY="middle"
-  
+        fontStyle="extrabold"
       >
-        {title}
+         {title}
+       
       </Text>
-
       <Text
-        position={[0, 0, depth / 2 + 0.01]}
-        fontSize={0.08}
+        position={[0, -0.2, depth / 2 + 0.01]}
+        fontSize={0.09}
         color={textColor}
         anchorX="center"
         anchorY="middle"

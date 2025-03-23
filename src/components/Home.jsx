@@ -59,7 +59,7 @@ function ComponentsShowcase() {
           position={[-2, 0.5, 0]}
           onClick={() => navigate("/uploadModel")}
           label="Upload Your Model"
-          color={"#F00"}
+          color={"#ed3b65"}
           hoverColor={"#7C3AED"}
         />
         <Menu3D
@@ -77,8 +77,8 @@ function ComponentsShowcase() {
           height={1}
           depth={0.1}
           color={"#F1F5F9"}
-          title="3D Card"
-          content="Interactive 3D card with hover effects"
+          title="Cross 3D"
+          content="Your Gateway to Seamless 3D Integration."
         />
 
         <Loader3D
@@ -94,8 +94,8 @@ function ComponentsShowcase() {
           speed={0.0005}
         />
       <Text
-        position={[0, -2, 0]}
-        fontSize={0.25}
+        position={[0, -1, 0]}
+        fontSize={0.15}
         color="#00FF00"
         anchorX="center"
         anchorY="middle"
@@ -104,8 +104,8 @@ function ComponentsShowcase() {
         Before using any shape or model make sure you download three js first   
       </Text>
       <Text
-        position={[0, -2.5, 0]}
-        fontSize={0.25}
+        position={[0, -1.3, 0]}
+        fontSize={0.15}
         color="#00FF00"
         anchorX="center"
         anchorY="middle"

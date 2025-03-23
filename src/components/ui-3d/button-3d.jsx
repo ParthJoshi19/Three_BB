@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
-import { GradientTexture, Text } from "@react-three/drei"
+import { GradientTexture, Html, Text } from "@react-three/drei"
 import { useSpring, animated } from "@react-spring/three"
 import { gsap } from "gsap"
 import * as THREE from "three"
@@ -77,8 +77,9 @@ export function Button3D({
         <boxGeometry args={[width, height, depth]} />
         <meshStandardMaterial color={hovered ? hoverColor : color} roughness={0.3} metalness={0.2} />
       </mesh>
-
+      
       <Text position={[0, 0, depth / 2 + 0.01]} fontSize={0.1} color={textColor} anchorX="center" anchorY="middle">
+      <Html><i className="ri-upload-2-fill absolute -top-21 -left-4 text-2xl"></i></Html>
         {label}
       </Text>
     </animated.group>
