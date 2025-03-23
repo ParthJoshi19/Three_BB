@@ -74,7 +74,7 @@ const GetShapes = (shape) => {
   }
 
   return (
-    <div className="bg-transparent shadow-md shadow-white rounded-xl p-4 flex flex-col items-center">
+    <div className="bg-[rgba(0,0,0,0.2)] shadow-md  rounded-xl p-4 flex flex-col items-center">
       <div className="border-2 border-blue-500 rounded-lg p-2 ">
         <Canvas camera={{ position: [3, 3, 3] }} className="w-full h-40">
           <ambientLight intensity={0.5} />
