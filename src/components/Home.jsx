@@ -1,6 +1,11 @@
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, Loader } from "@react-three/drei";
+import {
+  OrbitControls,
+  Environment,
+  Loader,
+  GradientTexture,
+} from "@react-three/drei";
 import { Button3D } from "./ui-3d/button-3d";
 import { Card3D } from "./ui-3d/card-3d";
 import { Loader3D } from "./ui-3d/loader-3d";
@@ -17,13 +22,16 @@ export default function Home() {
       <div className="absolute top-10 right-4 z-10 flex gap-2"></div>
 
       <div className="w-full flex justify-center items-center h-screen">
-        <Canvas camera={{ position: [1, 1, 4], fov: 60 }}>
-          <color attach="background" args={["#000"]} />
-
-          <pointLight position={[0, 5, 0]} intensity={2} />
+        <Canvas className="bg-gradient-to-b from-[#0D1B2A] via-[#0D1B2A] to-[#000]" camera={{ position: [1, 2, 8], fov: 35 }}>
+          <mesh>
+            <GradientTexture attach="map" stops={[0, 1]} colors={["#00FF00"]} />
           <Suspense>
             <ComponentsShowcase />
           </Suspense>
+          </mesh>
+          {/* <color attach="background" args={["#0D1B2A"]} /> */}
+
+          <pointLight position={[0, 5, 0]} intensity={2} />
 
           <OrbitControls
             enablePan
