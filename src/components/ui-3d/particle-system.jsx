@@ -61,10 +61,10 @@ export function ParticleSystem({ count = 5000, color = "#ffffff", size = 0.02, s
 
   return (
     <group>
-      <pointLight ref={light} distance={40} intensity={10} color="#fff" />
+      <pointLight ref={light} distance={40} intensity={10} color="#FFFFFF" />
       <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
         <sphereGeometry args={[size, 32, 32]} />
-        <meshPhongMaterial color={"#fff"} />
+        <meshPhongMaterial color={"#FFFFFF"} />
       </instancedMesh>
     </group>
   )
