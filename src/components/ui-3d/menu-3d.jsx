@@ -84,7 +84,7 @@ export function Menu3D({
               color={"#111111"}
               anchorY="middle"
             >
-              {item.label}
+              {item.label==="Home"?"Documentation":item.label}
             </Text>
           </group>
         )
