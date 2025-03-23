@@ -18,7 +18,10 @@ const UploadModel = () => {
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
+
       <Canvas camera={{fov:window.innerWidth<768?130:75}} className="border-2">
+
+      
         <ambientLight intensity={1.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls enableZoom={false} />

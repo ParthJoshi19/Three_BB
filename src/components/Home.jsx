@@ -5,6 +5,7 @@ import {
   Environment,
   Loader,
   GradientTexture,
+  Float,
 } from "@react-three/drei";
 import { Button3D } from "./ui-3d/button-3d";
 import { Card3D } from "./ui-3d/card-3d";
@@ -29,7 +30,6 @@ export default function Home() {
             <ComponentsShowcase />
           </Suspense>
           </mesh>
-          {/* <color attach="background" args={["#0D1B2A"]} /> */}
 
           <pointLight position={[0, 5, 0]} intensity={2} />
 
@@ -47,10 +47,11 @@ export default function Home() {
   );
 }
 
-function ComponentsShowcase({ onShowModelViewer }) {
+function ComponentsShowcase() {
   const navigate = useNavigate();
   return (
     <group>
+      <Float position={[0, 0, 0]} speed={6} floatIntensity={0.1}>
       <Button3D
         position={[-2, 0.5, 0]}
         onClick={() => navigate("/uploadModel")}
@@ -84,6 +85,7 @@ function ComponentsShowcase({ onShowModelViewer }) {
         color={"#DB2777"}
       />
       <ParticleSystem count={1000} color={"#fff"} size={0.15} speed={0.0005} />
+      </Float>
     </group>
   );
 }
