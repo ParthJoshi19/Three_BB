@@ -68,7 +68,7 @@ const UploadModel = () => {
               anchorY="middle"
               depthWrite={false}
             >
-              Upload your 3D model in .glb or .gltf format only
+              Upload your 3D model in .glb format only
             </Text>
             <Text
               position={[0, -2, 0.51]}
