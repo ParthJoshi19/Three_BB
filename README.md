@@ -1,4 +1,4 @@
-# React + Vite 3D Model Viewer
+# Cross 3D
 
 This project is a 3D model viewer built with React and Vite. It allows users to view, customize, and upload 3D models using the Three.js library and React Three Fiber.
 
