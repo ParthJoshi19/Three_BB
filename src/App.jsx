@@ -1,9 +1,6 @@
 import React from "react";
 import Home from "./components/Home";
 import CustomizeShape from "./Pages/CustomizesShape"
-import { useGLTF } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-// import Scene from './components/Model2'
 import Shape3D from "./Pages/Shape3D";
 import Docs from "./Pages/Docs";
 import Models3D from "./Pages/Models3d";
