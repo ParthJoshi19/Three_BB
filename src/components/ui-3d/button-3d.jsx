@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
-import { Text } from "@react-three/drei"
+import { GradientTexture, Text } from "@react-three/drei"
 import { useSpring, animated } from "@react-spring/three"
 import { gsap } from "gsap"
 import * as THREE from "three"
@@ -73,6 +73,7 @@ export function Button3D({
         onPointerDown={handleClick}
         castShadow
       >
+        <GradientTexture attach="map" stops={[0, 1]} colors={[color]} />
         <boxGeometry args={[width, height, depth]} />
         <meshStandardMaterial color={hovered ? hoverColor : color} roughness={0.3} metalness={0.2} />
       </mesh>

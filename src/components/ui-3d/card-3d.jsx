@@ -61,7 +61,7 @@ export function Card3D({
         <boxGeometry args={[width, height, depth]} />
         <ambientLight intensity={2} />
         <meshStandardMaterial>
-          <GradientTexture attach="map" stops={[0, 1]} colors={['#FFFFFF']} />
+          <GradientTexture attach="map" stops={[0, 1]} colors={['#00FF00']} />
         </meshStandardMaterial>
       </mesh>
 

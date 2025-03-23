@@ -46,8 +46,8 @@ function ComponentsShowcase({ onShowModelViewer }) {
       <Button3D
         position={[-2, 0.5, 0]}
         onClick={() => navigate("/uploadModel")}
-        label="Open Model Viewer"
-        color={"#4C1D95"}
+        label="Upload Your Model"
+        color={"#F00"}
         hoverColor={"#7C3AED"}
       />
       <Menu3D
