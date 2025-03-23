@@ -9,39 +9,11 @@ import {
   Environment,
 } from "@react-three/drei";
 import { motion } from "framer-motion";
-import { useFrame } from "@react-three/fiber";
+import { useNavigate } from "react-router-dom";
 
-// const ParticleSystem = ({ count, color, size, speed }) => {
-//   const particlesRef = useRef(null);
-
-//   useFrame(() => {
-//     if (particlesRef.current) {
-//       particlesRef.current.rotation.y += speed;
-//     }
-//   });
-
-//   return (
-//     <group ref={particlesRef}>
-//       {Array.from({ length: count }).map((_, i) => (
-//         <mesh
-//           key={i}
-//           position={[
-//             (Math.random() - 0.5) * 20,
-//             (Math.random() - 0.5) * 20,
-//             (Math.random() - 0.5) * 20,
-//           ]}
-//         >
-//           <sphereGeometry args={[size * Math.random(), 8, 8]} />
-//           <meshBasicMaterial color={color} transparent opacity={0.6} />
-//         </mesh>
-//       ))}
-//     </group>
-//   );
-// };
 
 const CodeBlock = ({ code }) => {
   const [copied, setCopied] = useState(false);
-  // console.log(code)
   const copyToClipboard = (line) => {
     navigator.clipboard.writeText(line);
     setCopied(true);
@@ -138,7 +110,7 @@ const InstallationCard = ({ activeTab, installationSteps, setActiveTab }) => {
 
 const Docs = () => {
   const [activeTab, setActiveTab] = useState(0);
-
+  const navigate=useNavigate();
   const installationSteps = [
     "npm install three @react-three/fiber @react-three/drei",
     "npm install three @react-three/fiber @react-three/drei",
@@ -147,7 +119,7 @@ const Docs = () => {
 
   return (
     <div className="w-full h-screen bg-transparent">
-          <div className="z-10 text-white absolute" > BACK</div>
+          <div className="z-10 p-2  absolute left-4 top-2 rounded-md border-2 border-white bg-blue-300 text-black" onClick={()=>navigate("/")}> BACK</div>
 
       <Canvas camera={{ position: [0, 0, 10], fov: 90 }} shadows dpr={[1, 2]}>
         <color attach="background" args={["#050816"]} />
