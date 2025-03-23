@@ -6,53 +6,32 @@ import { Card3D } from "./ui-3d/card-3d";
 import { Loader3D } from "./ui-3d/loader-3d";
 import { Menu3D } from "./ui-3d/menu-3d";
 import { Stars } from "@react-three/drei";
-import { ModelViewer } from "./ui-3d/model-viewer"
+import UploadModel from "./../Pages/UploadModel";
 import * as THREE from "three";
-import { ParticleSystem } from "./ui-3d/particle-system"
-import GUI from "lil-gui";
-
+import { ParticleSystem } from "./ui-3d/particle-system";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const [showModelViewer, setShowModelViewer] = useState(false);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="absolute top-10 right-4 z-10 flex gap-2">
-      </div>
-
-      {showModelViewer ? (
-        <div className="absolute top-4 left-4 z-10">
-          <button
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md"
-            onClick={() => setShowModelViewer(false)}
-          >
-            Back to Components
-          </button>
-        </div>
-      ) : null}
+      <div className="absolute top-10 right-4 z-10 flex gap-2"></div>
 
       <div className="w-full flex justify-center items-center h-screen">
         <Canvas camera={{ position: [1, 1, 4], fov: 60 }}>
           <color attach="background" args={["#000"]} />
 
-          <pointLight position={[0,5,0]} intensity={2}/>
+          <pointLight position={[0, 5, 0]} intensity={2} />
           <Suspense>
-            {!showModelViewer ? (
-              <ComponentsShowcase
-                onShowModelViewer={() => setShowModelViewer(true)}
-              />
-            ) : (
-              <ModelViewer/>
-            )}
+            <ComponentsShowcase />
           </Suspense>
 
-            <OrbitControls
-              enablePan
-              enableZoom
-              enableRotate
-              minDistance={2}
-              maxDistance={10}
-            />
-          {/* </Suspense> */}
+          <OrbitControls
+            enablePan
+            enableZoom
+            enableRotate
+            minDistance={2}
+            maxDistance={10}
+          />
         </Canvas>
       </div>
       <Loader />
@@ -61,11 +40,12 @@ export default function Home() {
 }
 
 function ComponentsShowcase({ onShowModelViewer }) {
+  const navigate = useNavigate();
   return (
     <group>
       <Button3D
         position={[-2, 0.5, 0]}
-        onClick={onShowModelViewer}
+        onClick={() => navigate("/uploadModel")}
         label="Open Model Viewer"
         color={"#4C1D95"}
         hoverColor={"#7C3AED"}
