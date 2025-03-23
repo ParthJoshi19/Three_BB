@@ -169,7 +169,8 @@ function Scene() {
     modelRef.current.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material.color.set('${settings.modelColor}');
-        child.material.emissive.set('${settings.emissiveColor}');
+        if(child.material.emissive)
+          child.material.emissive.set('${settings.emissiveColor}');
         child.material.emissiveIntensity = ${settings.emissiveIntensity};
         child.material.castShadow = true;
       }
@@ -246,7 +247,8 @@ function Scene() {
     modelRef.current.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material.color.set('${settings.modelColor}');
-        child.material.emissive.set('${settings.emissiveColor}');
+        if(child.material.emissive)
+          child.material.emissive.set('${settings.emissiveColor}');
         child.material.emissiveIntensity = ${settings.emissiveIntensity};
         child.material.castShadow = true;
       }

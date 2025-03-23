@@ -375,6 +375,7 @@ function Scene() {
   export default Scene;
   `,
     Next: `
+    "use client";
   import React, { useRef, useState, useEffect } from "react";
   import { Canvas, useThree } from "@react-three/fiber";
   import { useGLTF, OrbitControls } from "@react-three/drei";
@@ -422,7 +423,7 @@ function Scene() {
   return null;
   }
   
-  const Scene=()=> {
+  const Page=()=> {
   return (
   <div  style={{position:"absolute",height:"100vh",width:"100vw",inset:"0"}}>
     <Canvas camera={{ fov: ${settings.cameraFOV}, position: [0, 0, 10] }}>
@@ -448,7 +449,7 @@ function Scene() {
   );
   }
   
-  export default Scene;`,
+  export default Page;`,
     Vanilla: `
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
