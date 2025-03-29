@@ -321,7 +321,7 @@ Format responses as:
                 />
                 <button
                   onClick={handleSendMessage}
-                  className="ml-2 bg-blue-500 hover:bg-blue-600 p-2 rounded-lg h-fit"
+                  className="ml-2 bg-blue-500 hover:bg-blue-600 p-2 rounded-lg h-20 w-40"
                   disabled={loading}
                 >
                   {loading ? "..." : "Send"}
