@@ -388,14 +388,14 @@ function Scene() {
   ];
   const gsapAnimationsV = [
     {
-      1: `gsap.to(shape.position, {
+      1: `gsap.to(model.position, {
         y: "+=0.5",
         repeat: -1,
         yoyo: true,
         duration: 2,
         ease: "sine.inOut",
       });
-      gsap.to(shape.rotation, {
+      gsap.to(model.rotation, {
         y: "+=" + Math.PI * 2,
         duration: 10,
         repeat: -1,
@@ -404,7 +404,7 @@ function Scene() {
     },
     {
       2: `
-      gsap.to(shape.scale, {
+      gsap.to(model.scale, {
         x: 1.1,
         y: 1.1,
         z: 1.1,
@@ -413,7 +413,7 @@ function Scene() {
         duration: 1.5,
         ease: "power1.inOut",
       });
-      gsap.to(shape.position, {
+      gsap.to(model.position, {
         x: "+=0.5",
         repeat: -1,
         yoyo: true,
@@ -423,7 +423,7 @@ function Scene() {
       `,
     },
     {
-      3: `gsap.to(shape.position, {
+      3: `gsap.to(model.position, {
         x: "+=1",
         y: "+=0.5",
         repeat: -1,
@@ -431,7 +431,7 @@ function Scene() {
         duration: 4,
         ease: "sine.inOut",
       });
-      gsap.to(shape.rotation, {
+      gsap.to(model.rotation, {
         y: "+=" + Math.PI * 2,
         duration: 5,
         repeat: -1,
@@ -439,7 +439,7 @@ function Scene() {
       });`,
     },
     {
-      4: `gsap.to(shape.material.color, {
+      4: `gsap.to(model.material.color, {
         r: Math.random(),
         g: Math.random(),
         b: Math.random(),
@@ -450,7 +450,7 @@ function Scene() {
       });`,
     },
     {
-      5: `gsap.to(shape.position, {
+      5: `gsap.to(model.position, {
         x: "+=0.1",
         y: "-=0.1",
         repeat: -1,
