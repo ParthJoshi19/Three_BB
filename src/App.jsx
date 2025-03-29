@@ -7,6 +7,7 @@ import Models3D from "./Pages/Models3d";
 import CustomizeModel from "./Pages/CustomizeModel";
 import UploadModel from "./Pages/UploadModel"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Chatbot from "./Pages/Chatbot";
 const App = () => {
   return (
     <Router>
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/customizemodel" element={<CustomizeModel />} />
         <Route path="/3dmodels" element={<Models3D />} />
         <Route path="/uploadModel" element={<UploadModel />} />
+        <Route path="/chatbot" element={<Chatbot/>}/>
       </Routes>
     </Router>
   );
