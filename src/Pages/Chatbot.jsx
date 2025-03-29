@@ -150,7 +150,7 @@ Format responses as:
   // Copy to clipboard
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-    alert("Copied to clipboard!");
+    // alert("Copied to clipboard!");
   };
 
   // Panel animation
@@ -205,7 +205,7 @@ Format responses as:
     
         <Text
           position={[0, panelHeight / 2 - 0.15, 0.06]}
-          fontSize={0.12}
+          fontSize={0.18}
           color="#ffffff"
           anchorX="center"
           anchorY="top"
@@ -242,7 +242,7 @@ Format responses as:
                     }`}
                   >
                     <strong>
-                      {msg.sender === "user" ? "You:" : "Gemini:"}
+                      {msg.sender === "user" ? "You:" : "Minion:"}
                     </strong>
                     {!msg.text.includes("```js") && (
                       <ReactMarkdown>{msg.text}</ReactMarkdown>
@@ -316,7 +316,7 @@ Format responses as:
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Enter Three.js code..."
-                  className="flex-1 p-2 rounded-lg text-black whitespace-pre-wrap break-words bg-white"
+                  className="flex-1 text-4xl p-2 rounded-lg text-black whitespace-pre-wrap break-words bg-white"
                   rows="3"
                 />
                 <button
