@@ -32,7 +32,7 @@ function Model({ settings, setSettings, shape }) {
 
       modelRef.current.traverse((child) => {
         if (child.isMesh) {
-          child.material.color.set(settings.modelColor);
+          // child.material.color.set(settings.modelColor);
           child.material.metalness = settings.metalness;
           child.material.roughness = settings.roughness;
           child.material.emissiveIntensity = settings.emissiveIntensity;
