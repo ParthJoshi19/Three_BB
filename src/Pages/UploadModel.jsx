@@ -13,6 +13,7 @@ const UploadModel = () => {
     if (file) {
       processFile(file);
       event.target.value = null;
+      event.preventDefault();
     }
   };
 
