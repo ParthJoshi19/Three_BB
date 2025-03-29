@@ -90,19 +90,14 @@ function ComponentsShowcase() {
     <group>
       {/* <Float position={[0, 0, 0]} speed={6} floatIntensity={0.1}> */}
       <Button3D
-        position={[-1, -0.4  , 0]}
-        onClick={() => navigate("/uploadModel")}
-        label="Login"
+        position={[0, -0.4  , 0]}
+        onClick={() => navigate("/homes")}
+        label="Get Started"
+        lableY={-0.38}
         color={"#ed3b65"}
         hoverColor={"#7C3AED"}
       />
-      <Button3D
-        position={[0.8, -0.4  , 0]}
-        onClick={() => navigate("/uploadModel")}
-        label="Sign Up"
-        color={"#ed3b65"}
-        hoverColor={"#7C3AED"}
-      />
+      
       {/* <Menu3D
         position={[0, 2, 0]}
         items={[

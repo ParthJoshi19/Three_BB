@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Text3D } from "@react-three/drei";
 import {
   OrbitControls,
   Loader,
@@ -54,7 +55,7 @@ export default function Homes() {
           className="bg-black"
           camera={{
             position: [1, 2, 8],
-            fov: window.innerWidth < 768 ? 75 : 35,
+            fov: window.innerWidth < 768 ? 60 : 35,
           }}
         >
           <mesh>
