@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Text3D } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import {
   OrbitControls,
   Loader,
   GradientTexture,
   Float,
   Wireframe,
+  Html,
 } from "@react-three/drei";
 import { Button3D } from "./../components/ui-3d/button-3d";
 
@@ -64,6 +65,8 @@ export default function Homes() {
               <meshBasicMaterial wireframe="true" />
               <ComponentsShowcase />
             </Suspense>
+            <Html><ScrollingText /></Html>
+            
           </mesh>
 
           <pointLight position={[0, 5, 0]} intensity={2} />
@@ -80,6 +83,22 @@ export default function Homes() {
 
       <Loader />
     </main>
+  );
+}
+
+function ScrollingText() {
+  const textRef = useRef();
+
+  // useFrame(({ clock }) => {
+  //   if (textRef.current) {
+  //     textRef.current.position.x = (clock.getElapsedTime() * -2) % 10;
+  //   }
+  // });
+
+  return (
+    <div className=" absolute w-[85vw]  p-2/3 pl-3 text-lg text-black -bottom-90 rounded-2xl border-amber-900 border-4 bg-red-100 -left-[650px]" ref={textRef} >
+    ⚠️  Before using any shape or model from the website please make sure you go through our Documentation to install three.js and for GSAP to npm i gsap ⚠️
+    </div>
   );
 }
 

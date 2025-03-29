@@ -119,7 +119,7 @@ const Docs = () => {
 
   return (
     <div className="w-full h-screen bg-transparent">
-          <div className="z-10 p-2  absolute left-4 top-2 rounded-md border-2 border-white bg-blue-300 text-black" onClick={()=>navigate("/")}> BACK</div>
+          <div className="z-10 p-2  absolute left-4 top-2 rounded-md border-2 border-white bg-blue-300 text-black" onClick={()=>navigate("/homes")}> BACK</div>
 
       <Canvas camera={{ position: [0, 0, 10], fov: 90 }} shadows dpr={[1, 2]}>
         <color attach="background" args={["#050816"]} />

@@ -81,7 +81,7 @@ const GetShapes = ({ shape }) => {
 const Models3D = () => {
   return (
     <div className="min-h-screen max-w-screen bg-gradient-to-b from-[#0D1B2A] via-[#0D1B2A] to-[#0D1B2A] flex flex-col items-center py-10">
-      <h1 className="text-3xl text-white font-bold mb-8">3D Shapes Gallery</h1>
+      <h1 className="text-3xl text-white font-bold mb-8">3D Models Gallery</h1>
 
       <p className="text-xl text-center text-white">
         To use Models Simply download Model then click on customize button , customize Model and get
