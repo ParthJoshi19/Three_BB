@@ -18,6 +18,7 @@ export function Button3D({
   hoverColor = "#6366F1",
   textColor = "#FFFFFF",
   onClick,
+  lableY
 }) {
   const meshRef = useRef(null)
   const [hovered, setHovered] = useState(false)
@@ -59,7 +60,7 @@ export function Button3D({
     const t = state.clock.getElapsedTime()
     meshRef.current.position.y = position[1] + Math.sin(t * 2) * 0.02
   })
-
+  console.log(lableY)
   return (
     <animated.group
       position={position}
@@ -86,7 +87,7 @@ export function Button3D({
   </meshStandardMaterial>
 </mesh>
       
-      <Text position={[0, -0.4, depth / 2 + 0.01]} fontSize={0.1} color={textColor} anchorX="center" anchorY="middle">
+      <Text position={[0, lableY, depth / 2 + 0.01]} fontSize={0.1} color={textColor}>
         {label}
       </Text>
     </animated.group>

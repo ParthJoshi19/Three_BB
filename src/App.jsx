@@ -7,12 +7,14 @@ import Models3D from "./Pages/Models3d";
 import CustomizeModel from "./Pages/CustomizeModel";
 import UploadModel from "./Pages/UploadModel"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Homes from "./Pages/Home";
 import Chatbot from "./Pages/Chatbot";
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/homes" element={<Homes/>}/>
         <Route path="/home" element={<Docs />} />
         <Route path="/shapes3d" element={<Shape3D />} />
         <Route path="/customizeshape" element={<CustomizeShape />} />

@@ -7,14 +7,12 @@ import {
   Float,
   Wireframe,
 } from "@react-three/drei";
-import { Button3D } from "./ui-3d/button-3d";
-import { Card3D } from "./ui-3d/card-3d";
-import { Loader3D } from "./ui-3d/loader-3d";
-import { Menu3D } from "./ui-3d/menu-3d";
+import { Button3D } from "./../components/ui-3d/button-3d";
+
 import { Text } from "@react-three/drei";
-import { ParticleSystem } from "./ui-3d/particle-system";
+import { ParticleSystem } from "./../components/ui-3d/particle-system";
 import { useNavigate } from "react-router-dom";
-import * as THREE from "three";
+
 
 function FloatingShape({ shape, position, color }) {
   return (
@@ -45,7 +43,7 @@ function FloatingShape({ shape, position, color }) {
   );
 }
 
-export default function Home() {
+export default function Homes() {
   const navigate = useNavigate();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -78,7 +76,7 @@ export default function Home() {
           />
         </Canvas>
       </div>
-  
+
       <Loader />
     </main>
   );
@@ -90,40 +88,49 @@ function ComponentsShowcase() {
     <group>
       {/* <Float position={[0, 0, 0]} speed={6} floatIntensity={0.1}> */}
       <Button3D
-        position={[-1, -0.4  , 0]}
-        onClick={() => navigate("/uploadModel")}
-        label="Login"
+        position={[-1, 0.2    , 0]}
+        onClick={() => navigate("/3dmodels")}
+        label="3D Models"
+        lableY={0.2}
         color={"#ed3b65"}
         hoverColor={"#7C3AED"}
       />
       <Button3D
-        position={[0.8, -0.4  , 0]}
-        onClick={() => navigate("/uploadModel")}
-        label="Sign Up"
+        position={[0.8, 0.2  , 0]}
+        onClick={() => navigate("/shapes3d")}
+        lableY={0.2}
+        label="3D Shapes"
         color={"#ed3b65"}
         hoverColor={"#7C3AED"}
       />
-      {/* <Menu3D
-        position={[0, 2, 0]}
-        items={[
-          { label: "Home", value: "home" },
-          { label: "3D shapes", value: "3D shapes" },
-          { label: "3D Models", value: "3D Models" },
-        ]}  
-      /> */}
+      <Button3D
+        position={[-0.1, -0.3  , 0]}
+        onClick={() => navigate("/home")}
+        label="Documentation"        
+        lableY={-0.3}
+        color={"#ed3b65"}
+        hoverColor={"#7C3AED"}
+      />
+      <Button3D
+        position={[0.8, -0.8  , 0]}
+        onClick={() => navigate("/chatbot")}
+        label="ChatBot"        
+        lableY={-0.8}
+        color={"#ed3b65"}
+        hoverColor={"#7C3AED"}
+      />
+      <Button3D
+        position={[-1, -0.8  , 0]}
+        onClick={() => navigate("/uploadModel")}
+        label="Upload Your Model"
+        color={"#ed3b65"}        
+        lableY={-0.8}
+        hoverColor={"#7C3AED"}
+      />
 
       <ambientLight intensity={2} />
       <ParticleSystem count={1000} color={"#fff"} size={0.15} speed={0.0005} />
-      <Text
-        position={[0, 0, 0]}
-        fontSize={0.75}
-        color="#FFFFFF"
-        anchorX="center"
-        anchorY="middle"
-        depthWrite={false}
-      >
-        Cross 3D
-      </Text>
+      
       {/* <Text
         position={[0, -1.3, 0]}
         fontSize={0.15}
